@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe SessionsController, type: :request do
+RSpec.describe 'Sessions', type: :request do
   before(:each) do
     User.create(name: 'Hugo', email: 'hugo@mail.com', password: '123456')
   end
 
   describe 'POST #create' do
-    it 'should return status: :created and logged_in: true when logging in with existing user' do
+    it 'should return status created when logging in with existing user' do
       params = { email: 'hugo@mail.com', password: '123456' }
       headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' }
       post '/sessions', params: params.to_json, headers: headers
@@ -16,6 +16,7 @@ RSpec.describe SessionsController, type: :request do
     end
 
     it 'should return status 401 when logging in with incorrect data' do
+      # Using a invalid password
       params = { email: 'hugo@mail.com', password: 'incorrect' }
       headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' }
       post '/sessions', params: params.to_json, headers: headers
